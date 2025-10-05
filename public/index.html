@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Diary 🎧</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Spotify Diary 🎵</h1>
+
+  <form id="diary-form">
+    <textarea id="content" placeholder="今日の日記を書いてください..." required></textarea>
+    <br>
+    <label>今日の気分を選択：</label>
+    <select id="mood">
+      <option value="happy">😊 嬉しい</option>
+      <option value="sad">😢 悲しい</option>
+      <option value="energetic">💪 元気</option>
+      <option value="relax">😌 リラックス</option>
+    </select>
+    <br><br>
+    <button type="submit">日記を保存しておすすめ音楽を見る</button>
+  </form>
+
+  <hr>
+
+  <h2>おすすめの音楽 🎶</h2>
+  <div id="music"></div>
+
+  <hr>
+
+  <h2>これまでの日記 📖</h2>
+  <ul id="diary-list"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>
