@@ -1,7 +1,10 @@
+// --- 📘 フォーム送信イベント ---
 document.getElementById("diary-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const content = document.getElementById("content").value;
-  const mood = document.getElementById("mood").value;
+
+  // --- 🧠 感情分析を実行 ---
+  const mood = await analyzeEmotion(content);
 
   // --- 📘 日記を保存 ---
   saveDiary(content, mood);
@@ -15,8 +18,24 @@ document.getElementById("diary-form").addEventListener("submit", async (e) => {
 
   // 入力フォームをリセット
   document.getElementById("content").value = "";
-  document.getElementById("mood").selectedIndex = 0;
 });
+
+
+// --- 🧠 感情分析（簡易AI分析） ---
+async function analyzeEmotion(text) {
+  try {
+    const res = await fetch("/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    const data = await res.json();
+    return data.mood || "neutral"; // サーバーからの感情結果を返す
+  } catch (error) {
+    console.error("感情分析エラー:", error);
+    return "neutral";
+  }
+}
 
 
 // --- 🎵 曲を取得して描画する関数 ---
@@ -77,7 +96,7 @@ function saveDiary(content, mood) {
 function displayDiaries() {
   const diaryList = document.getElementById("diary-list");
 
-  // ✅ diary-list が存在しなければ関数を中断して何もしない
+  // ✅ diary-list が存在しなければ中断
   if (!diaryList) return;
 
   const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
@@ -91,7 +110,7 @@ function displayDiaries() {
   diaries.slice().reverse().forEach((d) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <p><b>${d.date}</b> | 気分：${d.mood}</p>
+      <p><b>${d.date}</b> | 感情：${d.mood}</p>
       <p>${d.content}</p>
       <hr>
     `;
@@ -99,6 +118,5 @@ function displayDiaries() {
   });
 }
 
-
-// ページ読み込み時に履歴を表示
+// 📄 ページ読み込み時に履歴を表示
 document.addEventListener("DOMContentLoaded", displayDiaries);

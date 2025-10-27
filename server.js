@@ -1,6 +1,7 @@
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
+import Sentiment from "sentiment"; // ← 感情分析用ライブラリ
 dotenv.config();
 
 const app = express();
@@ -8,8 +9,9 @@ app.use(express.json());
 app.use(express.static("public"));
 
 const port = process.env.PORT || 3000;
+const sentiment = new Sentiment();
 
-// Spotifyトークン取得関数
+// --- Spotifyトークン取得 ---
 async function getSpotifyToken() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -29,32 +31,39 @@ async function getSpotifyToken() {
   return data.access_token;
 }
 
-// 感情に基づくおすすめ曲API
+// --- 🧠 感情分析 → 音楽提案 ---
 app.post("/recommend", async (req, res) => {
-  const { mood } = req.body;
+  const { content } = req.body;
+
+  // Step 1: 感情スコアを取得
+  const result = sentiment.analyze(content);
+  const score = result.score;
+
+  // Step 2: スコアに応じて「気分」を推定
+  let mood;
+  if (score > 2) mood = "happy";
+  else if (score < -2) mood = "sad";
+  else if (content.includes("疲") || content.includes("休")) mood = "relax";
+  else mood = "energetic";
+
+  console.log(`🧠 分析結果: ${score} → mood=${mood}`);
+
+  // Step 3: Spotifyから取得
   const token = await getSpotifyToken();
-
-  if (!token) {
-    return res.status(500).json({ error: "Spotify token error" });
-  }
-
   const moodQuery = {
-    happy: "party",
-    sad: "acoustic",
+    happy: "happy upbeat",
+    sad: "sad acoustic",
     energetic: "workout",
-    relax: "chill"
+    relax: "chill",
   }[mood] || "pop";
 
-  // offsetをランダム化（再提案ごとに違う曲になる）
-  const offset = Math.floor(Math.random() * 30);
-
   const response = await fetch(
-    `https://api.spotify.com/v1/search?q=${moodQuery}&type=track&limit=3&offset=${offset}`,
+    `https://api.spotify.com/v1/search?q=${moodQuery}&type=track&limit=3`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
   const data = await response.json();
-  res.json(data);
+  res.json({ mood, tracks: data.tracks.items });
 });
 
-app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
+app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
