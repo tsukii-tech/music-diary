@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/diary/style.css"],"sourcesContent":["\nbody {\n  font-family: 'Walter Turncoat',sans-serif;\n  font-weight: normal;\n  text-align: center;\n  background: #d3c3a9;\n  color: #534947;\n}\n.titledayo{\n  font-weight: bold;\n  font-size: 2.5rem;\n  color: #534947;\n  text-shadow:\n  2px 0 #FDFFF4,\n  -2px 0 #FDFFF4,\n  0 2px #FDFFF4,\n  0 -2px #FDFFF4,\n  2px 2px #FDFFF4,\n  -2px -2px #FDFFF4,\n  -2px 2px #FDFFF4,\n  2px -2px #FDFFF4;\n} \ntextarea {\n  width: 80%;\n  height: 100px;\n  margin: 10px 0;\n  padding: 10px;\n  background-color: #FDFFF4;\n  border-radius: 10px;\n  border: 0px solid; \n}\nbutton {\n  background-color: #5D432C;\n  color: #FDFFF4;\n  border: none;\n  border-radius: 20px;\n  padding: 10px 20px;\n  margin: 10px;\n  cursor: pointer;\n  font-size: 1em;\n}\n\nbutton:hover {\n  background-color: #534947;\n}\n\n.track-item {\n  margin: 15px auto;\n  padding: 10px;\n  width: 320px;\n  background-color: #FDFFF4;\n  border-radius: 10px;\n  box-shadow: 0 2px 6px rgba(255, 28, 28, 0.1);\n}\n"],"names":[],"mappings":"AACA;;;;;;;;AAOA;;;;;;;AAcA;;;;;;;;;;AASA;;;;;;;;;;;AAWA;;;;AAIA"}}]
+}
