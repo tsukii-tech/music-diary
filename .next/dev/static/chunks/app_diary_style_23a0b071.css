@@ -1,0 +1,51 @@
+/* [project]/app/diary/style.css [app-client] (css) */
+body {
+  text-align: center;
+  color: #534947;
+  background: #d3c3a9;
+  font-family: Walter Turncoat, sans-serif;
+  font-weight: normal;
+}
+
+.titledayo {
+  color: #534947;
+  text-shadow: 2px 0 #fdfff4, -2px 0 #fdfff4, 0 2px #fdfff4, 0 -2px #fdfff4, 2px 2px #fdfff4, -2px -2px #fdfff4, -2px 2px #fdfff4, 2px -2px #fdfff4;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+textarea {
+  background-color: #fdfff4;
+  border: 0 solid;
+  border-radius: 10px;
+  width: 80%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+button {
+  color: #fdfff4;
+  cursor: pointer;
+  background-color: #5d432c;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #534947;
+}
+
+.track-item {
+  background-color: #fdfff4;
+  border-radius: 10px;
+  width: 320px;
+  margin: 15px auto;
+  padding: 10px;
+  box-shadow: 0 2px 6px #ff1c1c1a;
+}
+
+/*# sourceMappingURL=app_diary_style_23a0b071.css.map*/
