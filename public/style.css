@@ -1,0 +1,54 @@
+
+body {
+  font-family: 'Walter Turncoat',sans-serif;
+  font-weight: normal;
+  text-align: center;
+  background: #d3c3a9;
+  color: #534947;
+}
+.titledayo{
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #534947;
+  text-shadow:
+  2px 0 #FDFFF4,
+  -2px 0 #FDFFF4,
+  0 2px #FDFFF4,
+  0 -2px #FDFFF4,
+  2px 2px #FDFFF4,
+  -2px -2px #FDFFF4,
+  -2px 2px #FDFFF4,
+  2px -2px #FDFFF4;
+} 
+textarea {
+  width: 80%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #FDFFF4;
+  border-radius: 10px;
+  border: 0px solid; 
+}
+button {
+  background-color: #5D432C;
+  color: #FDFFF4;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #534947;
+}
+
+.track-item {
+  margin: 15px auto;
+  padding: 10px;
+  width: 320px;
+  background-color: #FDFFF4;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(255, 28, 28, 0.1);
+}
