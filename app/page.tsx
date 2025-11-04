@@ -7,6 +7,7 @@ export default function Home() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
+
     // localStorageへ保存
     const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
     diaries.push({
@@ -21,19 +22,22 @@ export default function Home() {
 
     // 新ページへ。検索クエリに内容を渡す
     window.open(`/diary?text=${encodeURIComponent(content)}`, "_blank");
+
   };
 
   return (
     <main>
       <h1 className="titledayo">Music Day</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form id="diary-form" onSubmit={handleSubmit}>
         <textarea
+
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="今日の日記を書いてください..."
           required
         />
+
 
         <button type="submit">日記を保存しておすすめ音楽を見る</button>
       </form>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -6,9 +7,11 @@ export default function DiaryListPage() {
     const searchParams = useSearchParams();
     const [text, setText] = useState("");
 
+
     useEffect(() => {
         setText(searchParams.get("text") || "");
     }, [searchParams]);
+
 
     return (
         <main>
@@ -16,4 +19,5 @@ export default function DiaryListPage() {
         <p>{text}</p>
         </main>
     );
+
 }

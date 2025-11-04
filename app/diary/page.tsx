@@ -1,4 +1,5 @@
 "use client";
+
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -53,6 +54,7 @@ export default function DiaryPage() {
       <a href="/diary/history">
         <button style={{ marginTop: 20 }}>これまでの日記を見る</button>
       </a>
+
 
     </main>
   );
