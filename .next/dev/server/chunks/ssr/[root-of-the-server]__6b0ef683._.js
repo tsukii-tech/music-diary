@@ -42,13 +42,29 @@ function DiaryPage() {
     const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSearchParams"])();
     const text = params.get("text");
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    // ★ URLの?text=... を検知して localStorage に追記しておく
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!text) return;
+        const list = JSON.parse(localStorage.getItem("diaries") || "[]");
+        list.push({
+            id: crypto?.randomUUID && crypto.randomUUID() || Date.now(),
+            date: new Date().toLocaleString("ja-JP", {
+                hour12: false
+            }),
+            mood: null,
+            content: text
+        });
+        localStorage.setItem("diaries", JSON.stringify(list));
+    }, [
+        text
+    ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                 children: "これまでの日記 📘"
             }, void 0, false, {
                 fileName: "[project]/app/diary/page.jsx",
-                lineNumber: 14,
+                lineNumber: 26,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -63,7 +79,7 @@ function DiaryPage() {
                 children: "前のページへ"
             }, void 0, false, {
                 fileName: "[project]/app/diary/page.jsx",
-                lineNumber: 15,
+                lineNumber: 27,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -73,12 +89,12 @@ function DiaryPage() {
                     class: "pagetop__arrow"
                 }, void 0, false, {
                     fileName: "[project]/app/diary/page.jsx",
-                    lineNumber: 23,
+                    lineNumber: 35,
                     columnNumber: 35
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/diary/page.jsx",
-                lineNumber: 23,
+                lineNumber: 35,
                 columnNumber: 7
             }, this),
             text ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -91,37 +107,37 @@ function DiaryPage() {
                             children: "New"
                         }, void 0, false, {
                             fileName: "[project]/app/diary/page.jsx",
-                            lineNumber: 28,
+                            lineNumber: 40,
                             columnNumber: 9
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/diary/page.jsx",
-                        lineNumber: 27,
+                        lineNumber: 39,
                         columnNumber: 15
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: text
                     }, void 0, false, {
                         fileName: "[project]/app/diary/page.jsx",
-                        lineNumber: 30,
+                        lineNumber: 42,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/diary/page.jsx",
-                lineNumber: 26,
+                lineNumber: 38,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: "データがありません。"
             }, void 0, false, {
                 fileName: "[project]/app/diary/page.jsx",
-                lineNumber: 33,
+                lineNumber: 45,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/diary/page.jsx",
-        lineNumber: 13,
+        lineNumber: 25,
         columnNumber: 5
     }, this);
 }

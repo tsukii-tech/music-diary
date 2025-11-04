@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main>
-      <h1 className="titledayo">Spotify Diary 🎵</h1>
+      <h1 className="titledayo">Music Day</h1>
 
       <form onSubmit={handleSubmit}>
         <textarea

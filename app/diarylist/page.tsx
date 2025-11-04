@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 export default function DiaryListPage() {
     const [diaries, setDiaries] = useState<any[]>([]);
 
-    
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem("diaries") || "[]");
         setDiaries(data.reverse());

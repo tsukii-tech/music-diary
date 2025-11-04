@@ -9,7 +9,8 @@ body {
   background-size: cover;          /* 画面いっぱいに広げる */
   background-position: center;     /* どの端末でも中心を表示 */
   background-repeat: no-repeat;    /* 画像の繰り返しなし */
-  background-attachment: fixed;    /* スクロールしても固定（PC用） */
+  background-attachment: fixed; 
+  background-position: center top 80%;   
   background-color: #d3c3a9;       /* 読み込み前や補色用 */
 }
 .titledayo{
