@@ -36,11 +36,48 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   viewport?: any
 }
 
+type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRoutes> = {
+  GET?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  POST?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  PUT?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  PATCH?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  DELETE?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  HEAD?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+  OPTIONS?: (request: NextRequest, context: { params: Promise<ParamMap[Route]> }) => Promise<Response | void> | Response | void
+}
+
+
+// Validate ../../../app/diary/history/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/diary/history">> = Specific
+  const handler = {} as typeof import("../../../app/diary/history/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/diary/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/diary">> = Specific
+  const handler = {} as typeof import("../../../app/diary/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
 
 // Validate ../../../app/diarylist/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/diarylist">> = Specific
   const handler = {} as typeof import("../../../app/diarylist/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/favorite/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/favorite">> = Specific
+  const handler = {} as typeof import("../../../app/favorite/page.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check
@@ -55,7 +92,14 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
   type __Unused = __Check
 }
 
-
+// Validate ../../../app/api/recommend/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/recommend">> = Specific
+  const handler = {} as typeof import("../../../app/api/recommend/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
 
 
 

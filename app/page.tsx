@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 export default function Home() {
@@ -7,8 +6,21 @@ export default function Home() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
+    // localStorageへ保存
+    const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+    diaries.push({
+      content,
+      date: new Date().toLocaleString(),
+      iso: new Date().toISOString(),
+    });
+    localStorage.setItem("diaries", JSON.stringify(diaries));
+
+    // 空にする
+    setContent("");
+
+    // 新ページへ。検索クエリに内容を渡す
     window.open(`/diary?text=${encodeURIComponent(content)}`, "_blank");
-    setContent(""); // 送信後に消す！
   };
 
   return (
@@ -17,17 +29,14 @@ export default function Home() {
 
       <form onSubmit={handleSubmit}>
         <textarea
-          id="content"
-          placeholder="今日の日記を書いてください..."
-          required
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        ></textarea>
+          placeholder="今日の日記を書いてください..."
+          required
+        />
 
-        <br /><br />
         <button type="submit">日記を保存しておすすめ音楽を見る</button>
       </form>
     </main>
   );
 }
-

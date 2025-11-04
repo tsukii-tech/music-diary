@@ -7,3 +7,5 @@
 # Ignore temporary files
 *.log
 node_modules/
+
+.next/
