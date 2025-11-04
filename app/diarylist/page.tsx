@@ -1,23 +1,23 @@
 "use client";
-import { useSearchParams, useRouter } from "next/navigation";
+
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
-export default function DiaryPage() {
+export default function DiaryListPage() {
     const searchParams = useSearchParams();
     const [text, setText] = useState("");
-    const router = useRouter();
-    const handleBack = () => {
-        if (typeof window !== "undefined" && window.history.length > 1) {
-            router.back();
-        } else {
-            router.push("/");
-        }
-    };
+
 
     useEffect(() => {
         setText(searchParams.get("text") || "");
     }, [searchParams]);
 
-   
+
+    return (
+        <main>
+        <h2>あなたの日記</h2>
+        <p>{text}</p>
+        </main>
+    );
+
 }

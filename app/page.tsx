@@ -7,23 +7,22 @@ export default function Home() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // ローカルストレージ取得
+
+    // localStorageへ保存
     const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
-
-    // 新しい日記を追加
     diaries.push({
+      content,
       date: new Date().toLocaleString(),
-      content: content
+      iso: new Date().toISOString(),
     });
-
-    // 保存
     localStorage.setItem("diaries", JSON.stringify(diaries));
 
-    // 入力欄をリセット
+    // 空にする
     setContent("");
 
-    // 一覧ページを新タブで開く
-    window.open(`/diary`, "_blank");
+    // 新ページへ。検索クエリに内容を渡す
+    window.open(`/diary?text=${encodeURIComponent(content)}`, "_blank");
+
   };
 
   return (
@@ -32,15 +31,13 @@ export default function Home() {
 
       <form id="diary-form" onSubmit={handleSubmit}>
         <textarea
-          className="note"
-          id="content"
-          placeholder="今日の日記を書いてください..."
-          required
+
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="今日の日記を書いてください..."
+          required
         />
 
-        <br /><br />
 
         <button type="submit">日記を保存しておすすめ音楽を見る</button>
       </form>

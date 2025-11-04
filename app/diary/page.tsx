@@ -1,43 +1,61 @@
 "use client";
+
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function DiaryPage() {
-  const [diaries, setDiaries] = useState<any[]>([]);
-  const router = useRouter();
-  const handleBack = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      router.back();
-    } else {
-      router.push("/");
-    }
-  };
+  const searchParams = useSearchParams();
+  const [text, setText] = useState("");
+  const [tracks, setTracks] = useState<any[]>([]);
+  const [mood, setMood] = useState("");
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("diaries") || "[]");
-    setDiaries(saved.reverse()); // 新しい順に
+    const t = searchParams.get("text") || "";
+    setText(t);
+
+    // APIへ送信
+    fetch("/api/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: t }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setMood(data.mood);
+        setTracks(data.tracks);
+      });
   }, []);
 
-  return (
-    <main>
-      <h2>これまでの日記 📘</h2>
-      {diaries.length === 0 && <p>まだ日記はありません。</p>}
+  // お気に入り追加
+  const addFavorite = (track: any) => {
+    const favs = JSON.parse(localStorage.getItem("favorites") || "[]");
+    favs.push(track);
+    localStorage.setItem("favorites", JSON.stringify(favs));
+    alert("お気に入りに追加しました！");
+  };
 
-      <ul>
-        {diaries.map((d, idx) => (
-          <li key={idx} className="diary-item">
-            {idx === 0 && (
-              <div className="demo01__ribbon entry-ribbon"><p className="demo01__title">New</p></div>
-            )}
-            <p><b>{d.date}</b></p>
-            <div className="note">
-              <p>{d.content}</p>
-            </div>
-            <hr />
-          </li>
-        ))}
-      </ul>
-      <button className="backbtn" onClick={handleBack}>前のページへ</button>
+  return (
+    <main style={{ padding: 20 }}>
+      <h2>あなたの日記</h2>
+      <p>{text}</p>
+
+      <h3>感情推定：{mood}</h3>
+      <h3>おすすめの音楽 🎶</h3>
+
+      {tracks.map((t) => (
+        <div key={t.id} className="track-item">
+          <p>{t.name} / {t.artists[0].name}</p>
+          <a href={t.external_urls.spotify} target="_blank">Spotifyで聴く</a>
+          <br/>
+          <button onClick={() => addFavorite(t)}>お気に入りに追加</button>
+        </div>
+      ))}
+
+      <a href="/diary/history">
+        <button style={{ marginTop: 20 }}>これまでの日記を見る</button>
+      </a>
+
+
     </main>
   );
 }

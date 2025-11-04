@@ -5,6 +5,8 @@ export async function POST(request) {
 
   // 仮の分析ロジック
   const mood = text.includes("楽しい") ? "happy" : "neutral";
+  const apiKey = process.env.OPENAI_API_KEY;
+
 
   return NextResponse.json({
     mood,

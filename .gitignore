@@ -1,12 +1,3 @@
-# Ignore environment files
-.env.local
-
-# Ignore macOS system files
-.DS_Store
-
-# Ignore temporary files
-*.log
-node_modules/
 # Created by https://www.toptal.com/developers/gitignore/api/nextjs
 # Edit at https://www.toptal.com/developers/gitignore?templates=nextjs
 
@@ -45,5 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
 
 # End of https://www.toptal.com/developers/gitignore/api/nextjs
