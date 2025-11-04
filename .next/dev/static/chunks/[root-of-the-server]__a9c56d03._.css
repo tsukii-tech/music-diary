@@ -94,7 +94,7 @@
 body {
   text-align: center;
   color: #534947;
-  background: #d3c3a9;
+  background: #d3c3a9 url("/coffe.PNG") center / cover no-repeat fixed;
   font-family: Walter Turncoat, sans-serif;
   font-weight: normal;
 }

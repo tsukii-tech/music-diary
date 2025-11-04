@@ -5,6 +5,12 @@ body {
   text-align: center;
   background: #d3c3a9;
   color: #534947;
+  background-image: url("/coffe.PNG");
+  background-size: cover;          /* 画面いっぱいに広げる */
+  background-position: center;     /* どの端末でも中心を表示 */
+  background-repeat: no-repeat;    /* 画像の繰り返しなし */
+  background-attachment: fixed;    /* スクロールしても固定（PC用） */
+  background-color: #d3c3a9;       /* 読み込み前や補色用 */
 }
 .titledayo{
   font-weight: bold;
