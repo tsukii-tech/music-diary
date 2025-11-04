@@ -21,8 +21,19 @@ function Home() {
     const [content, setContent] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const handleSubmit = (e)=>{
         e.preventDefault();
-        window.open(`/diary?text=${encodeURIComponent(content)}`, "_blank");
-        setContent(""); // 送信後に消す！
+        // ローカルストレージ取得
+        const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+        // 新しい日記を追加
+        diaries.push({
+            date: new Date().toLocaleString(),
+            content: content
+        });
+        // 保存
+        localStorage.setItem("diaries", JSON.stringify(diaries));
+        // 入力欄をリセット
+        setContent("");
+        // 一覧ページを新タブで開く
+        window.open(`/diary`, "_blank");
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
         children: [
@@ -31,13 +42,15 @@ function Home() {
                 children: "Music Day"
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 16,
+                lineNumber: 31,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                id: "diary-form",
                 onSubmit: handleSubmit,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
+                        className: "note",
                         id: "content",
                         placeholder: "今日の日記を書いてください...",
                         required: true,
@@ -45,17 +58,17 @@ function Home() {
                         onChange: (e)=>setContent(e.target.value)
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 19,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 27,
+                        lineNumber: 43,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 27,
+                        lineNumber: 43,
                         columnNumber: 15
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -63,19 +76,19 @@ function Home() {
                         children: "日記を保存しておすすめ音楽を見る"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 28,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 18,
+                lineNumber: 33,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 15,
+        lineNumber: 30,
         columnNumber: 5
     }, this);
 }

@@ -1,33 +1,23 @@
 "use client";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-export default function DiaryListPage() {
-    const [diaries, setDiaries] = useState<any[]>([]);
+export default function DiaryPage() {
+    const searchParams = useSearchParams();
+    const [text, setText] = useState("");
+    const router = useRouter();
+    const handleBack = () => {
+        if (typeof window !== "undefined" && window.history.length > 1) {
+            router.back();
+        } else {
+            router.push("/");
+        }
+    };
 
     useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("diaries") || "[]");
-        setDiaries(data.reverse());
-    }, []);
+        setText(searchParams.get("text") || "");
+    }, [searchParams]);
 
-    if (diaries.length === 0) {
-        return <p>まだ日記はありません。</p>;
-    }
-
-    return (
-        <main style={{ padding: "20px" }}>
-        <h1>これまでの日記 📘</h1>
-        <ul>
-            {diaries.map((d, i) => (
-            <li key={i} style={{ marginBottom: "14px" }}>
-                <p>
-                <b>{d.date}</b> | 気分：{d.mood}
-                </p>
-                <p style={{ whiteSpace: "pre-wrap" }}>{d.content}</p>
-                <hr />
-            </li>
-            ))}
-        </ul>
-        </main>
-    );
-    }
+   
+}

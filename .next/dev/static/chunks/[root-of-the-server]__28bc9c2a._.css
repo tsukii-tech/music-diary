@@ -436,24 +436,39 @@ button:hover {
 .demo01__ribbon {
   color: #fdfff4;
   box-sizing: border-box;
+  z-index: 3;
   background-color: #b8766a;
-  width: 100px;
-  height: 36px;
-  margin: 0 0 0 -5px;
-  padding-top: 8px;
-  display: inline-block;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  max-width: 120px;
+  height: 32px;
+  font-size: clamp(.8rem, 2.5vw, 1.2rem);
+  font-weight: bold;
+  display: flex;
   position: absolute;
-  top: 89px;
-  left: 36px;
+  top: -10px;
+  left: -10px;
+}
+
+.diary-item {
+  position: relative;
+}
+
+.entry-ribbon.demo01__ribbon {
+  z-index: 3;
+  top: -12px;
+  left: -6px;
 }
 
 .demo01__title {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding-left: 25px;
-  font-size: 1.4rem;
   font-weight: bold;
+  font-size: inherit;
+  text-align: center;
+  margin: 0;
 }
 
 .demo01__title:before {

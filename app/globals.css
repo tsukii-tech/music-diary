@@ -111,29 +111,39 @@ button:hover {
   padding: 0;
 }
 
-.demo01__ribbon {
-  display: inline-block;
-  margin: 0 0 0 -5px;
-  padding-top: 8px;
-  width: 100px;
-  height: 36px;
-  position: absolute;
-  top: 89px;
-  left: 36;
-  
-  color: #FDFFF4;
-  box-sizing: border-box;
+.demo01__ribbon {  position: absolute;
+  top: -10px;
+  left: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;          /* ← レスポンシブ対応 */
+  max-width: 120px;
+  height: 32px;
   background-color: #B8766A;
+  color: #FDFFF4;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.diary-item { position: relative; }
+.entry-ribbon.demo01__ribbon {
+  top: -12px;
+  left: -6px;
+  z-index: 3;
 }
 
 .demo01__title {
   margin: 0;
-  padding-left: 25px;
   font-weight: bold;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 14px;
-  font-size: 1.4rem;
+  margin: 0;
+  font-size: inherit;
+  text-align: center;
 }
 
 .demo01__title:before {

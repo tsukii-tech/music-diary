@@ -25,13 +25,7 @@ localStorage.setItem("diaries", JSON.stringify(list));
   return (
     <main>
       <h1>これまでの日記 📘</h1>
-      <button
-      className="backbtn"
-      onClick={() => {
-        if (window.history.length > 1) 
-          {router.back();} else
-          {router.push("/");}
-      }} >前のページへ</button>
+      
 
       <a class="pagetop" href="#"><div class="pagetop__arrow"></div></a>
 
