@@ -93,19 +93,8 @@
 /* [project]/app/globals.css [app-client] (css) */
 @layer theme {
   :root, :host {
-    --color-zinc-50: #fafafa;
-    --color-black: #000;
-    --color-white: #fff;
-    --spacing: .25rem;
-    --container-3xl: 48rem;
     --default-font-family: var(--font-geist-sans);
     --default-mono-font-family: var(--font-geist-mono);
-  }
-
-  @supports (color: lab(0% 0 0)) {
-    :root, :host {
-      --color-zinc-50: lab(98.26% 0 0);
-    }
   }
 }
 
@@ -358,92 +347,163 @@
 @layer components;
 
 @layer utilities {
-  .flex {
-    display: flex;
-  }
-
-  .min-h-screen {
-    min-height: 100vh;
-  }
-
-  .w-full {
-    width: 100%;
-  }
-
-  .max-w-3xl {
-    max-width: var(--container-3xl);
-  }
-
-  .flex-col {
-    flex-direction: column;
-  }
-
-  .items-center {
-    align-items: center;
-  }
-
-  .justify-between {
-    justify-content: space-between;
-  }
-
-  .justify-center {
-    justify-content: center;
-  }
-
-  .bg-white {
-    background-color: var(--color-white);
-  }
-
-  .bg-zinc-50 {
-    background-color: var(--color-zinc-50);
-  }
-
-  .px-16 {
-    padding-inline: calc(var(--spacing) * 16);
-  }
-
-  .py-32 {
-    padding-block: calc(var(--spacing) * 32);
-  }
-
-  .font-sans {
-    font-family: var(--font-geist-sans);
-  }
-
   .antialiased {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  @media (min-width: 40rem) {
-    .sm\:items-start {
-      align-items: flex-start;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .dark\:bg-black {
-      background-color: var(--color-black);
-    }
-  }
 }
 
 :root {
-  --background: #fff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #d3c3a9;
+  --foreground: #534947;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #534947;
+  text-align: center;
+  background: url("/coffe.PNG") center / cover no-repeat fixed, #d3c3a9;
+  font-family: Walter Turncoat, sans-serif;
+  font-weight: normal;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #534947;
+    --foreground: #d3c3a9;
+  }
+}
+
+.titledayo {
+  color: #534947;
+  text-shadow: 2px 0 #fdfff4, -2px 0 #fdfff4, 0 2px #fdfff4, 0 -2px #fdfff4, 2px 2px #fdfff4, -2px -2px #fdfff4, -2px 2px #fdfff4, 2px -2px #fdfff4;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+textarea {
+  background-color: #fdfff4;
+  border: 0 solid;
+  border-radius: 10px;
+  width: 80%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+button {
+  color: #fdfff4;
+  cursor: pointer;
+  background-color: #5d432c;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #534947;
+}
+
+.track-item {
+  background-color: #fdfff4;
+  border-radius: 10px;
+  width: 320px;
+  margin: 15px auto;
+  padding: 10px;
+  box-shadow: 0 2px 6px #ff1c1c1a;
+}
+
+.note {
+  background-color: #fdfff4;
+  background-image: linear-gradient(#53494725 1px, #0000 1px);
+  background-position-y: 1.38em;
+  background-size: 100% 1em;
+  border: 1px solid #fdfff4;
+  border-radius: 10px;
+  width: 80%;
+  margin: 15px auto;
+  padding: 20px;
+  line-height: 1em;
+}
+
+.note p {
+  margin: 0;
+  padding: 0;
+}
+
+.demo01__ribbon {
+  color: #fdfff4;
+  box-sizing: border-box;
+  background-color: #b8766a;
+  width: 100px;
+  height: 36px;
+  margin: 0 0 0 -5px;
+  padding-top: 8px;
+  display: inline-block;
+  position: absolute;
+  top: 89px;
+  left: 36px;
+}
+
+.demo01__title {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding-left: 25px;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.demo01__title:before {
+  content: "";
+  border-top: none;
+  border-bottom: 5px solid #0000;
+  border-left: none;
+  border-right: 5px solid #b8766a;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.demo01__title:after {
+  z-index: 1;
+  content: "";
+  border: 18px solid #b8766a;
+  border-left: 0 solid #0000;
+  border-right: 10px solid #0000;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  right: -10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.backbtn {
+  color: #fdfff4;
+  cursor: pointer;
+  z-index: 2;
+  background: #5d432c;
+  border: none;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin: 10px;
+  padding: 8px 16px;
+  display: flex;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
+
+.backbtn:hover {
+  background: #534947;
 }
 
 /*# sourceMappingURL=%5Broot-of-the-server%5D__28bc9c2a._.css.map*/

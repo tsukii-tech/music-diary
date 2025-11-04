@@ -1,11 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #d3c3a9;
+  --foreground: #534947;
 }
 /* globals.css に置く（CSS Module じゃないファイル） */
 body{
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  
+  font-family: 'Walter Turncoat',sans-serif;
+  font-weight: normal;
+  text-align: center;
+  background: #d3c3a9;
+  color: #534947;
+  background-image: url("/coffe.PNG");
+  background-size: cover;          /* 画面いっぱいに広げる */
+  background-position: center;     /* どの端末でも中心を表示 */
+  background-repeat: no-repeat;    /* 画像の繰り返しなし */
+  background-attachment: fixed; 
+  background-position: center top 80%;   
+  background-color: #d3c3a9; 
+  
   background: url("/coffe.PNG") center/cover no-repeat fixed, #d3c3a9;
   color:#534947;
   font-family:'Walter Turncoat', sans-serif;
@@ -21,13 +38,149 @@ body{
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #534947;
+    --foreground: #d3c3a9;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+.titledayo{
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: #534947;
+  text-shadow:
+  2px 0 #FDFFF4,
+  -2px 0 #FDFFF4,
+  0 2px #FDFFF4,
+  0 -2px #FDFFF4,
+  2px 2px #FDFFF4,
+  -2px -2px #FDFFF4,
+  -2px 2px #FDFFF4,
+  2px -2px #FDFFF4;
+} 
+textarea {
+  width: 80%;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #FDFFF4;
+  border-radius: 10px;
+  border: 0px solid; 
 }
+button {
+  background-color: #5D432C;
+  color: #FDFFF4;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #534947;
+}
+
+.track-item {
+  margin: 15px auto;
+  padding: 10px;
+  width: 320px;
+  background-color: #FDFFF4;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(255, 28, 28, 0.1);
+}
+.note {
+  margin: 15px auto;
+  width: 80%;
+  background-color: #FDFFF4; 
+  padding: 20px;
+  border: 1px solid #FDFFF4;
+  border-radius: 10px;
+
+  background-image: linear-gradient(#53494725 1px, transparent 1px);
+  background-size: 100% 1em; /* 100%は横幅、2emは線の間隔 */
+  line-height: 1em; /* 文字の行の高さを線の間隔を調整 */
+  background-position-y: 1.38em;
+
+
+}
+
+.note p {
+  margin: 0; /* pタグのデフォルトマージンをリセット */
+  padding: 0;
+}
+
+.demo01__ribbon {
+  display: inline-block;
+  margin: 0 0 0 -5px;
+  padding-top: 8px;
+  width: 100px;
+  height: 36px;
+  position: absolute;
+  top: 89px;
+  left: 36;
+  
+  color: #FDFFF4;
+  box-sizing: border-box;
+  background-color: #B8766A;
+}
+
+.demo01__title {
+  margin: 0;
+  padding-left: 25px;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  font-size: 1.4rem;
+}
+
+.demo01__title:before {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  border: none;
+  border-right: solid 5px #B8766A;
+  border-bottom: solid 5px transparent;
+  content: '';
+}
+
+.demo01__title:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0;
+  right: -10px;
+  z-index: 1;
+  border-style: solid;
+  border-width: 18px 10px 18px 0;
+  border-color: #B8766A transparent;
+  content: '';
+}
+html {
+  scroll-behavior: smooth;
+}
+
+
+.backbtn {
+  background:#5D432C;
+  color:#FDFFF4;
+  border:none;
+  border-radius:20px;
+  padding:8px 16px;
+  cursor:pointer;
+  margin:10px;
+  height: 50px;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.backbtn:hover { background:#534947; }
+
+
