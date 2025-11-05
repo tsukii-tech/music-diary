@@ -36,11 +36,10 @@ export default function DiaryPage() {
 
   return (
     <main style={{ padding: 20 }}>
-      <h2>あなたの日記</h2>
-      <p>{text}</p>
+      
 
       <h3>感情推定：{mood}</h3>
-      <h3>おすすめの音楽 🎶</h3>
+      <h3>おすすめ</h3>
 
       {tracks.map((t) => (
         <div key={t.id} className="track-item">
