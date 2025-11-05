@@ -11,6 +11,23 @@
 /* globals.css に置く（CSS Module じゃないファイル） */
 html, body {
   cursor: url("/images/small.png") 4 4, auto !important;
+  textarea,
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  [contenteditable="true"],
+  .pen-area,
+.note p,
+.handdrawn {
+  cursor: url("/images/pen.png") 4 20, text !important;}
+  button:hover,
+[role="button"]:hover,
+a:hover,
+.clickable:hover,
+.btn:hover {
+  cursor: url("/images/finger.png") 8 2, pointer !important;
+}
+
   background-color: #d3c3a9;
   background-image: url("/images/coffe.png");
   background-position: center 80%;  
@@ -138,5 +155,3 @@ button:hover {
   z-index: 2;
 }
 .backbtn:hover { background:#534947; }
-
-
