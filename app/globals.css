@@ -115,6 +115,11 @@ button:hover {
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(255, 28, 28, 0.1);
 }
+
+.arubamu{
+  margin: 0px 90px;
+}
+
 .note {
   margin: 15px auto;
   width: 80%;
@@ -148,10 +153,10 @@ button:hover {
   position: fixed;
   right: 30px;
   bottom: 30px;
- 
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
 }
 .backbtn:hover { background:#534947; }
+

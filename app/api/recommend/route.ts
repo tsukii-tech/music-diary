@@ -1,61 +1,99 @@
 import { NextResponse } from "next/server";
 
-const MOOD_KEYWORDS: Record<string, string[]> = {
-  happy: ["うれしい", "楽しい", "嬉しい", "幸せ", "ワクワク"],
-  sad: ["悲しい", "泣きたい", "つらい", "失恋", "寂しい"],
-  energetic: ["元気", "最高", "やる気", "テンション"],
-  relax: ["落ち着く", "まったり", "ゆっくり", "睡眠"],
+// 🎭 感情ごとの検索候補
+const moodQueries: Record<string, string[]> = {
+  happy: ["楽しい J-POP", "ハッピー ポップ", "パーティー"],
+  sad: ["失恋 バラード", "切ない 歌", "悲しい 歌"],
+  angry: ["激しい ロック", "メタル", "激怒"],
+  relaxed: ["チル ミュージック", "癒し BGM", "LoFi"],
+  neutral: ["人気 ソング", "話題 曲", "急上昇 ミュージック"],
 };
 
-// 感情推定
-function analyzeMood(text: string) {
-  for (const mood in MOOD_KEYWORDS) {
-    if (MOOD_KEYWORDS[mood].some((w) => text.includes(w))) {
-      return mood;
-    }
-  }
-  return "neutral"; // fallback
+// 🎭 感情推定
+function detectMood(text: string): string {
+  if (/悲|泣|寂|落ち込/.test(text)) return "sad";
+  if (/嬉|楽|幸|最高/.test(text)) return "happy";
+  if (/怒|ムカ|腹/.test(text)) return "angry";
+  if (/癒|落ち着|穏/.test(text)) return "relaxed";
+  return "neutral";
 }
 
-// Spotify API用トークン取得
-async function getSpotifyToken() {
+// 🧩キーワード抽出
+function extractKeyword(text: string): string {
+  const words = text
+    .replace(/[。、,.!?！？]/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 1);
+
+  return words[0] || "人気";
+}
+
+// 🔑 Spotifyアクセストークン取得
+async function getAccessToken() {
+  const clientId = process.env.SPOTIFY_CLIENT_ID!;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
+
+  const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
+
   const res = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
-      Authorization:
-        "Basic " +
-        Buffer.from(
-          process.env.SPOTIFY_CLIENT_ID +
-            ":" +
-            process.env.SPOTIFY_CLIENT_SECRET
-        ).toString("base64"),
+      Authorization: `Basic ${auth}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: "grant_type=client_credentials",
   });
-  return res.json();
+
+  const data = await res.json();
+  return data.access_token;
 }
 
-// Spotify検索
-async function searchTracks(mood: string, token: string) {
-  const res = await fetch(
-    `https://api.spotify.com/v1/search?q=${mood}&type=track&limit=3`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  const json = await res.json();
-  return json.tracks.items || [];
+// 🎧 Spotify検索
+async function searchSpotify(query: string, limit = 1) {
+  const token = await getAccessToken();
+
+  const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+    query
+  )}&type=track&market=JP&limit=${limit}`;
+
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  const data = await res.json();
+  return data.tracks?.items || [];
 }
 
+// 🎉 APIエンドポイント本体
 export async function POST(req: Request) {
-  const { text } = await req.json();
-  const mood = analyzeMood(text);
+  try {
+    const body = await req.json();
+    const text = body.text || "";
 
-  const token = await getSpotifyToken();
-  const tracks = await searchTracks(mood, token.access_token);
+    // 感情判定
+    const mood = detectMood(text);
 
-  return NextResponse.json({ mood, tracks });
+    // キーワード抽出
+    const keyword = extractKeyword(text);
+
+    const list = moodQueries[mood];
+
+    // 🎧感情おすすめ 2曲
+    const tracks1 = await searchSpotify(list[0], 1);
+    const tracks2 = await searchSpotify(list[1], 1);
+
+    // 🧩キーワードおすすめ 1曲
+    const tracksKeyword = await searchSpotify(keyword, 1);
+
+    // 結合（3曲）
+    const tracks = [...tracks1, ...tracks2, ...tracksKeyword];
+
+    return NextResponse.json({
+      mood,
+      tracks,
+    });
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Failed" }, { status: 500 });
+  }
 }

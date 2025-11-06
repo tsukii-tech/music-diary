@@ -18,12 +18,20 @@ export default function DiaryPage() {
     fetch("/api/recommend", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: t }),
+      body: JSON.stringify({ 
+        text: t,
+        history: JSON.parse(localStorage.getItem("history") || "[]"),
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
         setMood(data.mood);
         setTracks(data.tracks);
+
+         // ✅ history更新
+        const old = JSON.parse(localStorage.getItem("history") || "[]");
+        const newer = [...old, ...data.tracks.map((t: any) => t.id)];
+        localStorage.setItem("history", JSON.stringify(newer));
       });
   }, []);
 
@@ -45,18 +53,20 @@ export default function DiaryPage() {
       {tracks.map((t) => (
         <div key={t.id} className="track-item">
           {t?.album?.images?.[0]?.url && (
-                <img
-                   src={t.album.images[0].url}
-                   alt={`${t.name} のアルバム画像`}
-                   width={120}
-                   height={120}
-                   style={{ borderRadius: 12, display: "block", marginBottom: 8 }}
-                 />
+                <div className="arubamu">
+                  <img 
+                      src={t.album.images[0].url}
+                      alt={`${t.name} のアルバム画像`}
+                      width={120}
+                      height={120}
+                      style={{ borderRadius: 12, display: "block", marginBottom: 8 }}
+                    />
+                </div>
           
           )}
           <p>{t.name} / {t.artists[0].name}</p>
-          <a href={t.external_urls.spotify} target="_blank"rel="noopener noreferrer">Spotifyで聴く</a>
-          <br/>
+          {/*<a href={t.external_urls.spotify} target="_blank"rel="noopener noreferrer">Spotifyで聴く</a>
+          <br/>*/}
           <a href={t.external_urls.spotify} target="_blank" rel="noopener noreferrer">
             Spotifyで聴く
           </a>
@@ -67,7 +77,7 @@ export default function DiaryPage() {
             <audio
               src={t.preview_url}
               controls
-             preload="none"
+              preload="none"
               data-audio
               onPlay={(e) => {
                 // このページ内で同時再生しないように、他のaudioを停止
@@ -76,7 +86,7 @@ export default function DiaryPage() {
                 });
               }}
               style={{ marginTop: 6 }}
-           />
+            />
           ) : (
             <small style={{ display: "inline-block", marginTop: 6, opacity: 0.7 }}>
               プレビュー音源なし
@@ -94,3 +104,4 @@ export default function DiaryPage() {
     </main>
   );
 }
+
