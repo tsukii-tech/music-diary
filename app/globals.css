@@ -1,33 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Walter+Turncoat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&display=swap');
 @import "tailwindcss";
+/* 日本語文字だけにSVGギザギザを適用 */
+
 
 :root {
   --background: #d3c3a9;
   --foreground: #534947;
 }
 /* globals.css に置く（CSS Module じゃないファイル） */
-body{
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  
-  font-family: 'Walter Turncoat',sans-serif;
-  font-weight: normal;
-  text-align: center;
-  background: #d3c3a9;
-  color: #534947;
-  background-image: url("/coffe.PNG");
-  background-size: cover;          /* 画面いっぱいに広げる */
-  background-position: center;     /* どの端末でも中心を表示 */
-  background-repeat: no-repeat;    /* 画像の繰り返しなし */
-  background-attachment: fixed; 
-  background-position: center top 80%;   
-  background-color: #d3c3a9; 
-  
-  background: url("/coffe.PNG") center/cover no-repeat fixed, #d3c3a9;
-  color:#534947;
-  font-family:'Walter Turncoat', sans-serif;
-  text-align:center;
+html, body {
+  cursor: url("/images/small.png") 4 4, auto !important;
+  textarea,
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  [contenteditable="true"],
+  .pen-area,
+.note p,
+.handdrawn {
+  cursor: url("/images/pen.png") 4 20, text !important;}
+  button:hover,
+[role="button"]:hover,
+a:hover,
+.clickable:hover,
+.btn:hover {
+  cursor: url("/images/finger.png") 8 2, pointer !important;
 }
+
+  background-color: #d3c3a9;
+  background-image: url("/images/coffe.png");
+  background-position: center 80%;  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #534947;
+  font-family: 'Walter Turncoat', 'Zen Maru Gothic',  sans-serif;
+  text-align: center;
+}
+
+
+.handdrawn {
+  font-family: 'Zen Maru Gothic', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #3a332d;
+  text-shadow:
+    0.6px 0.6px 0 #534947,
+    -0.6px -0.6px 0 #535353,
+    0.3px -0.3px 0 #535353;
+  filter: contrast(110%) brightness(98%);
+}
+
+
 
 @theme inline {
   --color-background: var(--background);
@@ -47,7 +72,7 @@ body{
 .titledayo{
   font-weight: bold;
   font-size: 2.5rem;
-  color: #534947;
+  color: #64462d;
   text-shadow:
   2px 0 #FDFFF4,
   -2px 0 #FDFFF4,
@@ -68,7 +93,7 @@ textarea {
   border: 0px solid; 
 }
 button {
-  background-color: #5D432C;
+  background-color: #B8766A;
   color: #FDFFF4;
   border: none;
   border-radius: 20px;
@@ -79,7 +104,7 @@ button {
 }
 
 button:hover {
-  background-color: #534947;
+  background-color: #ac695d;
 }
 
 .track-item {
@@ -101,7 +126,7 @@ button:hover {
   background-image: linear-gradient(#53494725 1px, transparent 1px);
   background-size: 100% 1em; /* 100%は横幅、2emは線の間隔 */
   line-height: 1em; /* 文字の行の高さを線の間隔を調整 */
-  background-position-y: 1.38em;
+  background-position-y: 1em;
 
 
 }
@@ -110,68 +135,6 @@ button:hover {
   margin: 0; /* pタグのデフォルトマージンをリセット */
   padding: 0;
 }
-
-.demo01__ribbon {  position: absolute;
-  top: -10px;
-  left: -10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 25%;          /* ← レスポンシブ対応 */
-  max-width: 120px;
-  height: 32px;
-  background-color: #B8766A;
-  color: #FDFFF4;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-  box-sizing: border-box;
-  z-index: 3;
-}
-
-.diary-item { position: relative; }
-.entry-ribbon.demo01__ribbon {
-  top: -12px;
-  left: -6px;
-  z-index: 3;
-}
-
-.demo01__title {
-  margin: 0;
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  font-size: inherit;
-  text-align: center;
-}
-
-.demo01__title:before {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  border: none;
-  border-right: solid 5px #B8766A;
-  border-bottom: solid 5px transparent;
-  content: '';
-}
-
-.demo01__title:after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0;
-  right: -10px;
-  z-index: 1;
-  border-style: solid;
-  border-width: 18px 10px 18px 0;
-  border-color: #B8766A transparent;
-  content: '';
-}
-html {
-  scroll-behavior: smooth;
-}
-
 
 .backbtn {
   background:#5D432C;
@@ -192,5 +155,3 @@ html {
   z-index: 2;
 }
 .backbtn:hover { background:#534947; }
-
-

@@ -30,7 +30,7 @@ export default function Home() {
       <h1 className="titledayo">Music Day</h1>
 
       <form id="diary-form" onSubmit={handleSubmit}>
-        <textarea
+        <textarea className="note"
 
           value={content}
           onChange={(e) => setContent(e.target.value)}

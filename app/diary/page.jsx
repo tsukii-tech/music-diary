@@ -31,9 +31,7 @@ localStorage.setItem("diaries", JSON.stringify(list));
 
       {text ? (
         <div className="note">
-              <div class="demo01__ribbon">
-        <h3 class="demo01__title">New</h3>
-    </div>
+          
           <p>{text}</p>
         </div>
       ) : (
