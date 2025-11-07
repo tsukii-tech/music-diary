@@ -24,7 +24,6 @@ localStorage.setItem("diaries", JSON.stringify(list));
 
   return (
     <main>
-      <h1>これまでの日記 📘</h1>
       
 
       <a class="pagetop" href="#"><div class="pagetop__arrow"></div></a>

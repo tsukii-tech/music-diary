@@ -32,7 +32,7 @@ export default function DiaryHistoryPage() {
             <li key={d.iso} style={{ position: "relative", marginBottom: 20 }}>
                 {idx === 0 && (
                 <div className="demo01__ribbon" style={{ position: "absolute", left: 10, top: -10 }}>
-                    <p className="demo01__title">NEW</p>
+                    <p className="demo01__title"></p>
                 </div>
                 )}
 
