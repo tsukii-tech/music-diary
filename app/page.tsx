@@ -9,13 +9,16 @@ export default function Home() {
 
 
     // localStorageへ保存
-    const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+    {/*const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
     diaries.push({
       content,
       date: new Date().toLocaleString(),
       iso: new Date().toISOString(),
     });
-    localStorage.setItem("diaries", JSON.stringify(diaries));
+    localStorage.setItem("diaries", JSON.stringify(diaries));*/}
+
+    localStorage.setItem("pendingDiaryContent", content);
+
 
     // 空にする
     setContent("");
