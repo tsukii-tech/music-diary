@@ -42,7 +42,7 @@ export default function Home() {
         />
 
 
-        <button type="submit">日記を保存しておすすめ音楽を見る</button>
+        <button type="submit" style={{ display: 'block', margin: '0 auto' }}>きろくする</button>
       </form>
     </main>
   );
