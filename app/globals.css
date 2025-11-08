@@ -107,6 +107,13 @@ button:hover {
   background-color: #ac695d;
 }
 
+button.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(80%);
+}
+
+
 .track-item {
   margin: 15px auto;
   padding: 10px;
@@ -140,6 +147,8 @@ button:hover {
   margin: 0; /* pタグのデフォルトマージンをリセット */
   padding: 0;
 }
+
+
 
 .backbtn {
   background:#5D432C;
