@@ -9,8 +9,7 @@ export default function DiaryPage() {
   const [tracks, setTracks] = useState<any[]>([]);
   const [mood, setMood] = useState("");
 
-  // ✅ pendingDiaryContent（前のページで書いた文章）との紐付けで使う
-  const [favoriteTrack, setFavoriteTrack] = useState<any | null>(null);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem("sent")) return;
@@ -37,11 +36,10 @@ export default function DiaryPage() {
       });
   }, []);
 
-  // ✅ 日記＋音楽セットで保存！
   const addFavorite = (track: any) => {
     const content = localStorage.getItem("pendingDiaryContent") || "";
-
     const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
+
     diaries.push({
       date: new Date().toLocaleString("ja-JP", { hour12: false }),
       iso: new Date().toISOString(),
@@ -55,10 +53,9 @@ export default function DiaryPage() {
     });
 
     localStorage.setItem("diaries", JSON.stringify(diaries));
-
-    // ✅ 保存後に削除
     localStorage.removeItem("pendingDiaryContent");
 
+    setSaved(true);
     alert("保存しました！");
   };
 
@@ -106,7 +103,16 @@ export default function DiaryPage() {
             </small>
           )}
 
-          <button onClick={() => addFavorite(t)}>お気に入りに追加</button>
+          {/* ✅ disabled属性は使わずデザイン維持 */}
+          <button
+            className={`favorite-btn ${saved ? "disabled" : ""}`}
+            onClick={() => {
+              if (!saved) addFavorite(t);
+            }}
+            style={saved ? { pointerEvents: "none" } : {}}
+          >
+            お気に入りに追加
+          </button>
         </div>
       ))}
 
