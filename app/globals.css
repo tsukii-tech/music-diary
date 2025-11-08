@@ -83,6 +83,17 @@ a:hover,
   -2px 2px #FDFFF4,
   2px -2px #FDFFF4;
 } 
+.komidasidayo{
+  font-weight: bold;
+  color: #64462d;font-size: 1.5rem;
+
+  text-shadow:
+  1px 0 #FDFFF4,
+  -1px 0 #FDFFF4,
+  0 1px #FDFFF4,
+  0 -1px #FDFFF4,
+  1px 1px #FDFFF4;
+} 
 textarea {
   width: 80%;
   height: 100px;
