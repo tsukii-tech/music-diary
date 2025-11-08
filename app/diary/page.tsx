@@ -1,45 +1,101 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+function dedupeTracks(arr: any[]) {
+  const map = new Map<string, any>();
+  for (const t of arr) {
+    const key =
+      t?.id ??
+      t?.uri ??
+      `${t?.name ?? ""}-${t?.artists?.[0]?.name ?? ""}`.toLowerCase();
+    if (!map.has(key)) map.set(key, t);
+  }
+  return Array.from(map.values());
+}
+
 export default function DiaryPage() {
-  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const [text, setText] = useState("");
   const [tracks, setTracks] = useState<any[]>([]);
   const [mood, setMood] = useState("");
-  const [selected, setSelected] = useState<string>(""); // ✅ どの曲を選んだか
+  const [selected, setSelected] = useState<string>("");
 
+  // ✅ localStorage 系処理は useEffect 内必須
   useEffect(() => {
-    if (sessionStorage.getItem("sent")) return;
-    sessionStorage.setItem("sent", "1");
-    const t = searchParams.get("text") || "";
-    setText(t);
-
-    fetch("/api/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: t,
-        history: JSON.parse(localStorage.getItem("history") || "[]"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setMood(data.mood);
-        setTracks(data.tracks);
-
-        const old = JSON.parse(localStorage.getItem("history") || "[]");
-        const newer = [...old, ...data.tracks.map((t: any) => t.id)];
-        localStorage.setItem("history", JSON.stringify(newer));
-      });
+    if (typeof window === "undefined") return;
   }, []);
 
-  // ✅ 日記＋音楽セットで保存！
-  const addFavorite = (track: any) => {
-    if (selected) return; // すでに保存済みならブロック
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-    const content = localStorage.getItem("pendingDiaryContent") || "";
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get("text") || "";
+
+    if (t) {
+      setText(t);
+      sessionStorage.setItem(`incoming:${t}`, "1");
+      setTimeout(() => {
+        if (window.location.search.includes("text=")) {
+          router.replace("/diary");
+        }
+      }, 0);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (!text) return;
+    if (typeof window === "undefined") return;
+
+    const fetchedKey = `fetched:${text}`;
+    if (sessionStorage.getItem(fetchedKey)) return;
+    sessionStorage.setItem(fetchedKey, "1");
+
+    let aborted = false;
+
+    (async () => {
+      try {
+        const history = JSON.parse(localStorage.getItem("history") || "[]");
+        const res = await fetch("/api/recommend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, history }),
+        });
+        const data = await res.json();
+        if (aborted) return;
+
+        const got = Array.isArray(data?.tracks) ? data.tracks : [];
+        const unique = dedupeTracks(got);
+
+        setMood(data?.mood ?? "");
+        setTracks(unique);
+
+        const old = Array.isArray(history) ? history : [];
+        const newer = Array.from(
+          new Set([...old, ...unique.map((t: any) => t.id).filter(Boolean)])
+        );
+        localStorage.setItem("history", JSON.stringify(newer));
+      } catch (e) {
+        console.error(e);
+        setTracks([]);
+      }
+    })();
+
+    return () => {
+      aborted = true;
+    };
+  }, [text]);
+
+  // ✅ localStorage を useEffect 内に移す
+  const addFavorite = (track: any) => {
+    if (selected) return;
+
+    if (typeof window === "undefined") return;
+
+    const content =
+      localStorage.getItem("pendingDiaryContent") || text || "";
     const diaries = JSON.parse(localStorage.getItem("diaries") || "[]");
 
     diaries.push({
@@ -47,49 +103,121 @@ export default function DiaryPage() {
       iso: new Date().toISOString(),
       content,
       music: {
-        title: track.name,
-        artist: track.artists[0].name,
-        url: track.external_urls.spotify,
-        image: track.album.images[0]?.url,
+        title: track?.name,
+        artist: track?.artists?.[0]?.name,
+        url: track?.external_urls?.spotify,
+        image: track?.album?.images?.[0]?.url,
       },
     });
 
     localStorage.setItem("diaries", JSON.stringify(diaries));
     localStorage.removeItem("pendingDiaryContent");
-    setSelected(track.id);
-
-    alert("保存しました！");
+    setSelected(track?.id ?? "selected");
   };
 
   return (
     <main style={{ padding: 20 }}>
-      <h3>感情推定：{mood}</h3>
-      <h3>おすすめ</h3>
+      <h3 className="komidasidayo">
+        <b>今日のあなたを表す曲は…</b>
+      </h3>
 
-      {tracks.map((t) => (
-        <div key={t.id} className="track-item">
-          {t?.album?.images?.[0]?.url && (
-            <img
-              src={t.album.images[0].url}
-              width={120}
-              height={120}
-              style={{ borderRadius: 12, marginBottom: 8 }}
-            />
-          )}
-          <p>{t.name} / {t.artists[0].name}</p>
+      {tracks.length === 0 ? (
+        <p>おすすめの曲がまだありません。</p>
+      ) : (
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          {tracks.map((t, i) => {
+            const title = t?.name ?? "Unknown title";
+            const artist = t?.artists?.[0]?.name ?? "Unknown artist";
+            const imageUrl = t?.album?.images?.[0]?.url;
+            const spotifyUrl = t?.external_urls?.spotify;
 
-          <button
-            onClick={() => addFavorite(t)}
-            className={selected ? "disabled" : ""}
-          >
-            お気に入りに追加
-          </button>
-        </div>
-      ))}
+            const alreadyChosen = selected && selected === (t?.id ?? "");
 
-      <a href="/diary/history">
-        <button style={{ marginTop: 20 }}>これまでの日記を見る</button>
-      </a>
+            return (
+              <li
+                key={t?.id ?? t?.uri ?? `${title}-${artist}-${i}`}
+                style={{
+                  marginBottom: 16,
+                  opacity: alreadyChosen ? 0.7 : 1,
+                  background: "rgba(255,255,255,0.35)",
+                  borderRadius: 12,
+                  padding: 16,
+                  margin: "16px auto",
+                  width: "90%",
+                }}
+              >
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: 16 }}
+                ></div>
+                {imageUrl && (
+                  <a
+                    href={spotifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "inline-block", marginBottom: 8 }}
+                  >
+                    <img
+                      className="track-cover"
+                      src={imageUrl}
+                      alt={`${title} のアルバム画像`}
+                      width={120}
+                      height={120}
+                      style={{ borderRadius: 12, display: "block" }}
+                    />
+                  </a>
+                )}
+
+                <p
+                  className="track-main"
+                  style={{ margin: "4px 0 8px", fontWeight: 600 }}
+                >
+                  {title} / {artist}
+                </p>
+
+                {t?.preview_url ? (
+                  <audio
+                    src={t.preview_url}
+                    controls
+                    preload="none"
+                    data-audio
+                    onPlay={(e) => {
+                      document
+                        .querySelectorAll('audio[data-audio]')
+                        .forEach((el) => {
+                          if (el !== e.currentTarget)
+                            (el as HTMLAudioElement).pause();
+                        });
+                    }}
+                    style={{ display: "block", marginTop: 6 }}
+                  />
+                ) : (
+                  <small
+                    style={{
+                      display: "inline-block",
+                      marginTop: 6,
+                      opacity: 0.7,
+                    }}
+                  >
+                    プレビュー音源なし
+                  </small>
+                )}
+
+                <div style={{ marginTop: 8 }}>
+                  <a href="/diary/history">
+                    <button
+                      onClick={() => addFavorite(t)}
+                      disabled={!!selected}
+                      style={{ marginLeft: 8, opacity: selected ? 0.6 : 1 }}
+                    >
+                      {"この曲にする"}
+                    </button>
+                  </a>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </main>
   );
 }
