@@ -37,8 +37,6 @@
                     style={{ position: "absolute", left: 10, top: -10 }}
                 >
                     <p className="demo01__title">NEW</p>
-                <div className="demo01__ribbon" style={{ position: "absolute", left: 10, top: -10 }}>
-                    <p className="demo01__title"></p>
                 </div>
                 )}
 
@@ -49,27 +47,26 @@
 
                 {/* ✅曲が登録されている場合のみ表示 */}
                 {d.music && (
-                    <div style={{ marginTop: 10, paddingTop: 10 }}>
+                    <div style={{ marginTop: 12, borderTop: "1px solid #ccc", paddingTop: 10 }}>
                     <p><b>お気に入り曲 🎧</b></p>
 
-                    {/*  
+                    {/* 画像 */}
                     {d.music.image && (
-                        <div style={{marginTop:10, marginLeft: 480, marginBottom:5}}>
-                            <img
-                            src={d.music.image}
-                            alt={d.music.title}
-                            width={120}
-                            height={120}
-                            />
-                        </div>
+                        <img
+                        src={d.music.image}
+                        alt={d.music.title}
+                        width={120}
+                        height={120}
+                        style={{ borderRadius: 8, marginBottom: 8 }}
+                        />
                     )}
-                    */}
+
                     {/* 曲目 */}
                     <p>{d.music.title} - {d.music.artist}</p>
 
                     {/* Spotifyリンク */}
                     <a href={d.music.url} target="_blank" rel="noopener noreferrer">
-                        Spotifyで聴く 
+                        Spotifyで聴く ▶️
                     </a>
                     </div>
                 )}
