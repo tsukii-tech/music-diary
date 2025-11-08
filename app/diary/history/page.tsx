@@ -37,6 +37,8 @@
                     style={{ position: "absolute", left: 10, top: -10 }}
                 >
                     <p className="demo01__title">NEW</p>
+                <div className="demo01__ribbon" style={{ position: "absolute", left: 10, top: -10 }}>
+                    <p className="demo01__title"></p>
                 </div>
                 )}
 
